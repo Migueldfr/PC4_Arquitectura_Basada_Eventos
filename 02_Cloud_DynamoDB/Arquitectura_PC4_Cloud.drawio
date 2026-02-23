@@ -1,0 +1,166 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.4.0">
+  <diagram name="Arquitectura PC4 - Event-Driven Cloud" id="pc4-arch">
+    <mxGraphModel dx="2066" dy="1137" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="j9m8CzMj3UlckpFSzZo9-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=0;" value="" vertex="1">
+          <mxGeometry height="210" width="210" x="470" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" value="&lt;b&gt;PC4 - Arquitectura Basada en Eventos (Cloud)&lt;/b&gt;&lt;br&gt;Sistema de Monitorización Climática IoT" vertex="1">
+          <mxGeometry height="70" width="600" x="608" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="eventbridge" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge" value="EventBridge&lt;br&gt;Scheduler&lt;br&gt;&lt;i&gt;rate(1 min)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="90" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda_producer" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#ED7100;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda" value="Lambda&lt;br&gt;&lt;b&gt;WeatherEvent&lt;br&gt;Producer&lt;/b&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="300" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_eb_producer" edge="1" parent="1" source="eventbridge" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E7157B;strokeWidth=2;" target="lambda_producer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_eb" connectable="0" parent="edge_eb_producer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#666666;" value="trigger" vertex="1">
+          <mxGeometry relative="1" x="-0.1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sns_topic" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns" value="SNS Topic&lt;br&gt;&lt;b&gt;WeatherEvents&lt;/b&gt;&lt;br&gt;&lt;i&gt;(Fan-out)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="530" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_producer_sns" edge="1" parent="1" source="lambda_producer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#ED7100;strokeWidth=2;" target="sns_topic">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_publish" connectable="0" parent="edge_producer_sns" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#666666;" value="publish()" vertex="1">
+          <mxGeometry relative="1" x="-0.1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sqs_alpinista" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=13;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs" value="SQS Queue&lt;br&gt;&lt;b&gt;weather_alpinista&lt;/b&gt;&lt;br&gt;&lt;i&gt;Filter: temp, wind&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="770" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs_ciclista" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=13;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs" value="SQS Queue&lt;br&gt;&lt;b&gt;weather_ciclista&lt;/b&gt;&lt;br&gt;&lt;i&gt;Filter: air, visibility&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="770" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs_dron" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=13;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs" value="SQS Queue&lt;br&gt;&lt;b&gt;weather_dron&lt;/b&gt;&lt;br&gt;&lt;i&gt;Filter: wind, visibility&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="770" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sns_alp" edge="1" parent="1" source="sns_topic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E7157B;strokeWidth=2;" target="sqs_alpinista">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sns_cic" edge="1" parent="1" source="sns_topic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E7157B;strokeWidth=2;" target="sqs_ciclista">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sns_dro" edge="1" parent="1" source="sns_topic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E7157B;strokeWidth=2;" target="sqs_dron">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda_alpinista" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#ED7100;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda" value="Lambda&lt;br&gt;&lt;b&gt;Process&lt;br&gt;Alpinista&lt;/b&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="1000" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda_ciclista" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#ED7100;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda" value="Lambda&lt;br&gt;&lt;b&gt;Process&lt;br&gt;Ciclista&lt;/b&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="1000" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda_dron" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#ED7100;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda" value="Lambda&lt;br&gt;&lt;b&gt;Process&lt;br&gt;Dron&lt;/b&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="1000" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sqs_alp" edge="1" parent="1" source="sqs_alpinista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#ED7100;strokeWidth=2;" target="lambda_alpinista">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sqs_cic" edge="1" parent="1" source="sqs_ciclista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#ED7100;strokeWidth=2;" target="lambda_ciclista">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sqs_dro" edge="1" parent="1" source="sqs_dron" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#ED7100;strokeWidth=2;" target="lambda_dron">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dynamodb" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#C925D1;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=13;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.dynamodb" value="DynamoDB&lt;br&gt;&lt;b&gt;4 Tablas&lt;/b&gt;&lt;br&gt;&lt;i&gt;alpinista_events&lt;br&gt;ciclista_events&lt;br&gt;dron_events&lt;br&gt;weather_alarmas&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="1250" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_alp_ddb" edge="1" parent="1" source="lambda_alpinista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#C925D1;strokeWidth=2;" target="dynamodb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_cic_ddb" edge="1" parent="1" source="lambda_ciclista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#C925D1;strokeWidth=2;" target="dynamodb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dro_ddb" edge="1" parent="1" source="lambda_dron" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#C925D1;strokeWidth=2;" target="dynamodb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudwatch" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=13;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch" value="CloudWatch&lt;br&gt;&lt;b&gt;Metrics &amp;amp; Logs&lt;/b&gt;&lt;br&gt;&lt;i&gt;AlertaExtrema&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="1250" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_alp_cw" edge="1" parent="1" source="lambda_alpinista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E7157B;strokeWidth=1;dashed=1;" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_cic_cw" edge="1" parent="1" source="lambda_ciclista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E7157B;strokeWidth=1;dashed=1;" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dro_cw" edge="1" parent="1" source="lambda_dron" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E7157B;strokeWidth=1;dashed=1;" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sns_alerts" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns" value="SNS Topic&lt;br&gt;&lt;b&gt;WeatherAlert&lt;br&gt;Notifications&lt;/b&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="1480" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_alp_sns" edge="1" parent="1" source="lambda_alpinista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#DD3522;strokeWidth=2;" target="sns_alerts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_cic_sns" edge="1" parent="1" source="lambda_ciclista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#DD3522;strokeWidth=2;" target="sns_alerts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_extremo" connectable="0" parent="edge_cic_sns" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=#DD3522;" value="&lt;b&gt;Solo si&lt;br&gt;EXTREMO&lt;/b&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dro_sns" edge="1" parent="1" source="lambda_dron" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#DD3522;strokeWidth=2;" target="sns_alerts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="email" parent="1" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.email;outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=14;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;" value="&lt;b&gt;📧 Email&lt;/b&gt;&lt;br&gt;&lt;i&gt;tu-correo@email.com&lt;/i&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="1680" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sns_email" edge="1" parent="1" source="sns_alerts" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#DD3522;strokeWidth=2;" target="email">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dlq_alpinista" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=11;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;opacity=60;" value="DLQ&lt;br&gt;&lt;i&gt;alpinista_dlq&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="50" x="900" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="dlq_ciclista" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=11;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;opacity=60;" value="DLQ&lt;br&gt;&lt;i&gt;ciclista_dlq&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="50" x="900" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="dlq_dron" parent="1" style="outlineConnect=0;html=1;fontColor=#232F3E;gradientColor=none;strokeColor=none;fillColor=#E7157B;labelBackgroundColor=#ffffff;align=center;fontStyle=0;fontSize=11;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;opacity=60;" value="DLQ&lt;br&gt;&lt;i&gt;dron_dlq&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="50" x="900" y="478" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dlq_alp" edge="1" parent="1" source="sqs_alpinista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;strokeWidth=1;dashed=1;" target="dlq_alpinista">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dlq_cic" edge="1" parent="1" source="sqs_ciclista" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;strokeWidth=1;dashed=1;" target="dlq_ciclista">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dlq_dro" edge="1" parent="1" source="sqs_dron" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#999999;strokeWidth=1;dashed=1;" target="dlq_dron">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_dlq" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#999999;" value="&lt;i&gt;max 3 retries&lt;/i&gt;" vertex="1">
+          <mxGeometry height="25" width="110" x="870" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#CCCCCC;fillColor=#F5F5F5;dashed=1;" value="" vertex="1">
+          <mxGeometry height="140" width="400" x="50" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;" value="&lt;b&gt;Leyenda&lt;/b&gt;" vertex="1">
+          <mxGeometry height="25" width="90" x="60" y="665" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1" parent="1" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;fontColor=#ED7100;" value="── Flujo principal de eventos" vertex="1">
+          <mxGeometry height="25" width="220" x="70" y="695" as="geometry" />
+        </mxCell>
+        <mxCell id="legend2" parent="1" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;fontColor=#DD3522;" value="── Alertas extremas → Email" vertex="1">
+          <mxGeometry height="25" width="220" x="70" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="legend3" parent="1" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;fontColor=#999999;" value="--- Métricas / Logs / DLQ" vertex="1">
+          <mxGeometry height="25" width="200" x="70" y="745" as="geometry" />
+        </mxCell>
+        <mxCell id="legend4" parent="1" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#666666;" value="&lt;i&gt;Región: eu-central-1 (Frankfurt) | Costo: $0 (Free Tier)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="25" width="370" x="70" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="j9m8CzMj3UlckpFSzZo9-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Local" vertex="1">
+          <mxGeometry height="30" width="60" x="539" y="148" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
