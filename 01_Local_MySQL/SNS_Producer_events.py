@@ -4,6 +4,10 @@ import uuid
 import time
 import boto3
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 
@@ -129,7 +133,10 @@ def get_wind_status(speed, gust):
     return status
 
 
-client_sns = boto3.client("sns", region_name="eu-central-1")
+REGION = os.getenv("AWS_REGION", "eu-central-1")
+ACCOUNT_ID = os.getenv("ACCOUNT_ID", "TU_ACCOUNT_ID")
+
+client_sns = boto3.client("sns", region_name=REGION)
 
 def generate_event():
     """Genera un evento aleatorio con valores frescos en cada llamada"""
@@ -203,7 +210,7 @@ while True:
     # IMPORTANTE: Enviamos eventType como MessageAttribute para que funcionen los filtros
     client_sns.publish(
         Message=json.dumps(event),
-        TargetArn="arn:aws:sns:eu-central-1:TU_ACCOUNT_ID:WeatherEvents",
+        TargetArn=f"arn:aws:sns:{REGION}:{ACCOUNT_ID}:WeatherEvents",
         MessageAttributes={
             'eventType': {
                 'DataType': 'String',

@@ -1,3 +1,8 @@
+import logging
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import boto3
 import json
 import mysql.connector
@@ -58,16 +63,15 @@ def procesar_alarma(event_id, event_type, valor, unidad, status, timestamp_event
         print(f"⚠️  Error guardando alarma en MySQL: {e}")
 
 # ============ CONFIGURACIÓN ============
-# URL de la Cola SQS del Dron
-QUEUE_URL = "https://sqs.eu-central-1.amazonaws.com/TU_ACCOUNT_ID/weather_dron" 
+QUEUE_URL = os.getenv("SQS_DRON_URL", f"https://sqs.eu-central-1.amazonaws.com/{os.getenv('ACCOUNT_ID')}/weather_dron")
 
-REGION = "eu-central-1"
+REGION = os.getenv("AWS_REGION", "eu-central-1")
 
 # MySQL Local
 DB_CONFIG = {
     "host": "localhost",
-    "user": "root",
-    "password": "root",
+    "user": os.getenv("DB_USER", "root"),
+    "password": os.getenv("DB_PASSWORD", "root"),
     "database": "pc4_clima_events",
     "port": 3306
 }

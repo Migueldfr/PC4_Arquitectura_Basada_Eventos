@@ -1,10 +1,15 @@
 import mysql.connector
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno (ignora si no existe el archivo)
+load_dotenv()
 
 # CONFIGURACIÓN MYSQL
 DB_CONFIG = {
     "host": "localhost",
-    "user": "root",
-    "password": "root",  # Cuidado no subir esto a git público
+    "user": os.getenv("DB_USER", "root"),
+    "password": os.getenv("DB_PASSWORD", "root"), 
     "port": 3306
 }
 
