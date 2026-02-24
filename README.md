@@ -26,6 +26,10 @@ La evolución definitiva del sistema donde **toda la infraestructura y ejecució
 
 👉 **[Ver Diagrama Visual de Arquitectura Cloud](./02_Cloud_DynamoDB/Arquitectura_PC4_Cloud.drawio)**
 
+[![Ver Diagrama Interactivo](https://img.shields.io/badge/Draw.io-Ver_Diagrama_Interactivo-F08705?style=for-the-badge&logo=diagrams.net&logoColor=white)](https://viewer.diagrams.net/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Arquitectura_PC4_Cloud.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2FMigueldfr%2FPC4_Arquitectura_Basada_Eventos%2Fmain%2F02_Cloud_DynamoDB%2FArquitectura_PC4_Cloud.drawio)
+
+![Diagrama Arquitectura Cloud](./02_Cloud_DynamoDB/image/Arquitectura_PC4_Cloud.png)
+
 ---
 
 ## 📁 Estructura del Repositorio
