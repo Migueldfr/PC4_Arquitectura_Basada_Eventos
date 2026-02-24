@@ -136,89 +136,26 @@ def get_wind_status(speed, gust):
 REGION = os.getenv("AWS_REGION", "eu-central-1")
 ACCOUNT_ID = os.getenv("ACCOUNT_ID", "TU_ACCOUNT_ID")
 
-client_sns = boto3.client("sns", region_name=REGION)
-
-def generate_event():
-    """Genera un evento aleatorio con valores frescos en cada llamada"""
+def main():
+    client_sns = boto3.client("sns", region_name=REGION)
+    print("Iniciando Productor de Eventos SNS...")
     
-    # Generar valores aleatorios
-    temperature_value = round(random.uniform(-70, 50), 2)
-    aqi_value = random.randint(0, 350)
-    pm25_value = round(random.uniform(0, 300), 2)
-    pm10_value = round(random.uniform(0, 500), 2)
-    distance_value = round(random.uniform(0, 10000))
-    speed_value = round(random.uniform(0, 62), 1)
-    gust_value = round(random.uniform(0, 70), 1)
-    
-    # Crear eventos con nuevos IDs y timestamps
-    sensor_temp = {
-        "eventId": str(uuid.uuid4()),
-        "eventType": "temperature-sensor",
-        "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
-        "data": {
-            "sensorId": "temp" + str(random.randint(1, 10000)),
-            "value": temperature_value,
-            "unit": "Cº",
-            "status": get_temperature_status(temperature_value)
-        }
-    }
-    
-    sensor_air = {
-        "eventId": str(uuid.uuid4()),
-        "eventType": "AirQuality-sensor",
-        "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
-        "data": {
-            "sensorId": "air-" + str(random.randint(1, 10000)),
-            "aqi": aqi_value,
-            "pm25": pm25_value,
-            "pm10": pm10_value,
-            "category": get_air_quality_category(aqi_value, pm25_value, pm10_value)
-        }
-    }
-    
-    sensor_visibility = {
-        "eventId": str(uuid.uuid4()),
-        "eventType": "visibility-sensor",
-        "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
-        "data": {
-            "sensorId": "vis-" + str(random.randint(1, 10000)),
-            "distance": distance_value,
-            "unit": "meters",
-            "condition": get_visibility_condition(distance_value)
-        }
-    }
-    
-    sensor_wind = {
-        "eventId": str(uuid.uuid4()),
-        "eventType": "wind-sensor",
-        "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'),
-        "data": {
-            "sensorId": "wind-" + str(random.randint(1, 10000)),
-            "speed": speed_value,
-            "speedUnit": "km/h",
-            "direction": random.choice(["N", "NE", "E", "SE", "S", "SW", "W", "NW"]),
-            "gust": gust_value,
-            "status": get_wind_status(speed_value, gust_value)
-        }
-    }
-    
-    return random.choice([sensor_air, sensor_temp, sensor_visibility, sensor_wind])
-
-while True:
-    event = generate_event()
-    
-    # IMPORTANTE: Enviamos eventType como MessageAttribute para que funcionen los filtros
-    client_sns.publish(
-        Message=json.dumps(event),
-        TargetArn=f"arn:aws:sns:{REGION}:{ACCOUNT_ID}:WeatherEvents",
-        MessageAttributes={
-            'eventType': {
-                'DataType': 'String',
-                'StringValue': event['eventType']
+    while True:
+        event = generate_event()
+        
+        # IMPORTANTE: Enviamos eventType como MessageAttribute para que funcionen los filtros
+        client_sns.publish(
+            Message=json.dumps(event),
+            TargetArn=f"arn:aws:sns:{REGION}:{ACCOUNT_ID}:WeatherEvents",
+            MessageAttributes={
+                'eventType': {
+                    'DataType': 'String',
+                    'StringValue': event['eventType']
+                }
             }
-        }
-    )
-    print("Evento enviado:", event)
-    time.sleep(0.5)  # streaming continuo
+        )
+        print("Evento enviado:", event)
+        time.sleep(0.5)  # streaming continuo
 
-
+if __name__ == "__main__":
+    main()
