@@ -34,6 +34,8 @@ share/python-wheels/
 
 # OS Files
 .DS_Store
+*.db
+*.sqlite3
 Thumbs.db
 ehthumbs.db
 Desktop.ini

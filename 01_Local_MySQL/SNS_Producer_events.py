@@ -203,7 +203,7 @@ while True:
     # IMPORTANTE: Enviamos eventType como MessageAttribute para que funcionen los filtros
     client_sns.publish(
         Message=json.dumps(event),
-        TargetArn="arn:aws:sns:eu-central-1:335660923051:WeatherEvents",
+        TargetArn="arn:aws:sns:eu-central-1:TU_ACCOUNT_ID:WeatherEvents",
         MessageAttributes={
             'eventType': {
                 'DataType': 'String',

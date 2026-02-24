@@ -4,7 +4,7 @@ import random
 from datetime import datetime
 
 # ============ CONFIGURACIÓN ============
-TOPIC_ARN = 'arn:aws:sns:eu-central-1:335660923051:SNSWeatherEvents'  # ⚠️ CAMBIA ESTO por tu ARN
+TOPIC_ARN = 'arn:aws:sns:eu-central-1:TU_ACCOUNT_ID:SNSWeatherEvents'  # ⚠️ CAMBIA ESTO por tu ARN
 REGION = 'eu-central-1'
 
 sns = boto3.client('sns', region_name=REGION)

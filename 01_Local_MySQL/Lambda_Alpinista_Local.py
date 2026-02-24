@@ -63,7 +63,7 @@ def procesar_alarma(event_id, event_type, valor, unidad, status, timestamp_event
 
 # ============ CONFIGURACIÓN ============
 # URL de la Cola SQS del Alpinista
-QUEUE_URL = "https://sqs.eu-central-1.amazonaws.com/335660923051/weather_alpinista" 
+QUEUE_URL = "https://sqs.eu-central-1.amazonaws.com/TU_ACCOUNT_ID/weather_alpinista" 
 
 REGION = "eu-central-1"
 

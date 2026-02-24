@@ -19,7 +19,7 @@ Esta guía te ayuda a configurar el Producer en AWS para que se ejecute automát
 ### 1.2 Subir código
 
 1. En el editor, **borra** el código de ejemplo
-2. **Copia** el contenido de [Lambda_Producer_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Producer_Cloud.py)
+2. **Copia** el contenido de [Lambda_Producer_Cloud.py](./Lambda_Producer_Cloud.py)
 3. **⚠️ IMPORTANTE:** Línea 8, cambia el `TOPIC_ARN` por el tuyo:
    ```python
    TOPIC_ARN = 'arn:aws:sns:eu-central-1:accountid:WeatherEvents'
@@ -43,7 +43,7 @@ Esta guía te ayuda a configurar el Producer en AWS para que se ejecute automát
     {
       "Effect": "Allow",
       "Action": "sns:Publish",
-      "Resource": "arn:aws:sns:eu-central-1:335660923051:WeatherEvents"
+      "Resource": "arn:aws:sns:eu-central-1:TU_ACCOUNT_ID:WeatherEvents"
     }
   ]
 }

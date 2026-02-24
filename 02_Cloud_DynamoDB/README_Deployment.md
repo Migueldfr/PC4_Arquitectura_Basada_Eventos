@@ -31,7 +31,7 @@ Cuando se detecta una condición meteorológica extrema (EXTREME_COLD, STORM, CR
 4. Click **Create topic**
 5. ⚠️ **COPIA el ARN** del topic (lo necesitarás luego), será algo como:
    ```
-   arn:aws:sns:eu-central-1:335660923051:WeatherAlertNotifications
+   arn:aws:sns:eu-central-1:TU_ACCOUNT_ID:WeatherAlertNotifications
    ```
 
 ### 0.2 Suscribir tu Email
@@ -65,9 +65,9 @@ Para **cada Lambda** (`ProcessAlpinista`, `ProcessDron`, `ProcessCiclista`):
 2. Click en la función (ej: `ProcessAlpinista`)
 3. Pestaña **Code** → **Borra** todo el código actual
 4. **Copia y pega** el contenido actualizado del archivo correspondiente:
-   - ProcessAlpinista → [Lambda_Alpinista_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Alpinista_Cloud.py)
-   - ProcessCiclista → [Lambda_Ciclista_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Ciclista_Cloud.py)
-   - ProcessDron → [Lambda_Dron_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Dron_Cloud.py)
+   - ProcessAlpinista → [Lambda_Alpinista_Cloud.py](./Lambda_Alpinista_Cloud.py)
+   - ProcessCiclista → [Lambda_Ciclista_Cloud.py](./Lambda_Ciclista_Cloud.py)
+   - ProcessDron → [Lambda_Dron_Cloud.py](./Lambda_Dron_Cloud.py)
 5. Click **Deploy** ✅
 
 ### 0.5 Añadir Variable de Entorno `ALERT_TOPIC_ARN`
@@ -167,7 +167,7 @@ python create_dynamodb_tables.py
 #### 2.2 Subir Código
 
 1. En la pestaña **Code**, elimina el código de ejemplo
-2. Copia y pega el contenido completo de [Lambda_Alpinista_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Alpinista_Cloud.py)
+2. Copia y pega el contenido completo de [Lambda_Alpinista_Cloud.py](./Lambda_Alpinista_Cloud.py)
 3. Click **Deploy**
 
 #### 2.3 Configurar Variables de Entorno
@@ -242,7 +242,7 @@ python create_dynamodb_tables.py
 ### Repetir para ProcessDron y ProcessCiclista
 
 **ProcessDron:**
-- Código: [Lambda_Dron_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Dron_Cloud.py)
+- Código: [Lambda_Dron_Cloud.py](./Lambda_Dron_Cloud.py)
 - Variables de entorno:
   ```
   TABLE_NAME = dron_events
@@ -255,7 +255,7 @@ python create_dynamodb_tables.py
 - Permisos: Cambiar `alpinista_events` → `dron_events` en el policy
 
 **ProcessCiclista:**
-- Código: [Lambda_Ciclista_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Ciclista_Cloud.py)
+- Código: [Lambda_Ciclista_Cloud.py](./Lambda_Ciclista_Cloud.py)
 - Variables de entorno:
   ```
   TABLE_NAME = ciclista_events
@@ -573,10 +573,10 @@ Con EventBridge, el Producer se ejecuta automáticamente cada minuto **en la nub
 ### 6.2 Subir Código
 
 1. En el editor, **borra** el código de ejemplo
-2. **Copia y pega** el contenido de [Lambda_Producer_Cloud.py](file:///c:/Users/migue/Documents/Repositorios/Data_Engineering_MBIT_2025/PC4_Arquitectura_Basada_Eventos/02_Cloud_DynamoDB/Lambda_Producer_Cloud.py)
+2. **Copia y pega** el contenido de [Lambda_Producer_Cloud.py](./Lambda_Producer_Cloud.py)
 3. **⚠️ IMPORTANTE:** Verifica que el `TOPIC_ARN` en la línea 7 tiene tu ARN correcto:
    ```python
-   TOPIC_ARN = 'arn:aws:sns:eu-central-1:335660923051:WeatherEvents'
+   TOPIC_ARN = 'arn:aws:sns:eu-central-1:TU_ACCOUNT_ID:WeatherEvents'
    ```
    > Puedes encontrar tu ARN en: AWS Console → SNS → Topics → `SNSWeatherEvents`
 4. Click **Deploy**
